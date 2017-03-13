@@ -130,7 +130,7 @@ agent008 <- function(x, n = 3){
 }
 
 #---------------------------------------------------------------------------------------------------#
-#								                   BLUP                 							#
+#			             BLUP                 					    #
 #---------------------------------------------------------------------------------------------------#
 #OK! - 28.02.14
 
@@ -184,71 +184,6 @@ blup.cv <- function(pheno, geno, b = NULL, n = 10, folds = NULL, err = FALSE, pa
 					 }
 }
 
-
-# #version for fancy_cv -> 18.02.2015	
-# blup.cv <- function(pheno, geno, b = NULL, n = 10, folds = NULL, err = FALSE, parallel = FALSE){
-	# if(is.null(folds)){
-		# folds <- cv.folds(length(pheno), folds = n)
-			# } else{folds <- folds
-			  # n <- length(folds)
-				# }
-			# if(parallel == FALSE){
-	# output <- 
-		# lapply(1 : n, FUN = function(i){
-			# test <- folds[[i]]
-			# fit <- mixed.solve(pheno[-test], X = b[-test, ], Z = geno[-test, ], method = 'REML')
-			# pred <- blup.pred(fit, geno[test, ], b[test, ])	
-			# rsq_ <- calc.mse(pheno[test], pred, rsq = TRUE)
-			# cor_ <- cor(pheno[test], pred, method = 'spearman')
-			# return(list(rsq_, cor_))
-		# })
-			# } else{
-	# output <- 
-		# foreach(i = 1 : n)  %dopar% {
-			# test <- folds[[i]]
-			# fit <- mixed.solve(pheno[-test], X = b[-test, ], Z = geno[-test, ], method = 'REML')
-			# pred <- blup.pred(fit, geno[test, ], b[test, ])
-			# rsq_ <- calc.mse(pheno[test], pred, rsq = TRUE)
-			# cor_ <- cor(pheno[test], pred, method = 'spearman')
-			# return(list(rsq_, cor_))
-	# }
-		# }
-			# rsq_ <- sapply(output, '[[', 1)
-			# cor_ <- sapply(output, '[[', 2)
-			# return(list = c(rsq = rsq_, cor = cor_))
-# }
-
-#v3 19/12/2014
-# blup.cv <- function(pheno, geno, b = NULL, n = 10, folds = NULL, extra = FALSE, parallel = FALSE){
-	# if(is.null(folds)){
-		# folds <- cv.folds(length(pheno), folds = n)
-			# } else{folds <- folds
-			  # n <- length(folds)
-				# }
-			# if(parallel == FALSE){
-	# pred <- 
-		# lapply(1 : n, FUN = function(i){
-			# test <- folds[[i]]
-			# fit <- mixed.solve(pheno[-test], X = b[-test, ], Z = geno[-test, ], method = 'REML')
-			# blup.pred(fit, geno[test, ], b[test, ])	
-		# })
-			# } else{
-	# pred <- 
-		# foreach(i = 1 : n)  %dopar% {
-			# test <- folds[[i]]
-			# fit <- mixed.solve(pheno[-test], X = b[-test, ], Z = geno[-test, ], method = 'REML')
-			# blup.pred(fit, geno[test, ], b[test, ])
-	# }
-		# }
-			# pred <- unlist(pred)[order(unlist(folds))]
-				# if(extra == TRUE){out <- fold.mse(obs = pheno, pred = pred, folds = folds, rsq = TRUE)
-					# ans <- list(pred = pred, rsq = out[[1]], rsq_folds = out[[2]], rsq_sd = out[[3]])	
-						# }else{out <- calc.mse(obs = pheno, pred = pred, rsq = TRUE)
-							# ans <- list(pred = pred, rsq = out)}
-			 # return(ans)
-# }
-
-#//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ################################CONTIG_TO_FASTA#############################################
 # 20.05.14
@@ -340,17 +275,7 @@ calc.mse <- function(obs, pred, rsq = FALSE){
 						}
 							}
 
-#not finished
-# calc.mse2 <- function(obs, pred, rsq = FALSE, ind = NULL){
-					# if(is.null(ind)) ind <- as.factor(numbstrip(rownames(obs)))
-						
-						# if(!is.matrix(obs) | !is.matrix(pred)){obs <- as.matrix(obs); pred <- as.matrix(pred)}
-						# rs <- (obs - pred)^2						
-						# if(rsq == FALSE){colMeans(rs, na.rm = TRUE)}else{
-							# meanmat <- matrix(rep(colMeans(obs, na.rm = TRUE), nrow(obs)), nrow = nrow(obs), byrow = TRUE)
-							# 1 - colSums(rs, na.rm = TRUE)/colSums((obs - meanmat)^2, na.rm = TRUE)
-						# }
-							# }										
+#--------------
 
 # v1.2 - 18.11.2014	
 fold.mse <- function(obs, pred, folds, rsq = FALSE){
